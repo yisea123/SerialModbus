@@ -1,0 +1,4 @@
+A command line utility to demonstrate the use of the Advantech specific
+ADAM 5000/6000 series commands. These commands allow module configuration
+and other enhanced functions.
+

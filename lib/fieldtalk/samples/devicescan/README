@@ -1,0 +1,2 @@
+A simple scheduler based device scanner which polls cyclically
+two PML power meters.

@@ -1,0 +1,148 @@
+#
+# Makefile - FieldTalk Modbus Master C++ Library build
+#
+# Requires: MS nmake and MS C++ Compiler Ver 14.00 (Visual C++ 2005)
+#       or: Borland make v5.2 and Borland C++ 5.3
+#
+
+
+!ifdef _NMAKE_VER
+# MS VC++ and nmake
+AR=lib.exe
+# GS- is required so lib is compatibe with VC 6 (@__security_check_cookie@4 linker error)
+# Refer to http://support.microsoft.com/kb/894573
+# QIfist is required so lib is compatibe with VC 6 and 2003 (unresolved external symbol __ftol2)
+# Refer to http://msdn.microsoft.com/en-us/library/6d9xx1d2(VS.80).aspx
+CFLAGS=-MT -O2 -GR- -GS- -EHs-c- -W4 -Zl -QIfist
+LDFLAGS=-LD Ws2_32.lib
+EOPT=-Fe
+OOPT=-Fo
+!ifdef DLL
+OS_EXT=windll\win32\release
+!else
+OS_EXT=win\win32\release
+!endif
+!else
+# Borland C++ and Borland make
+AR=tlib
+CFLAGS=
+LDFLAGS=-tWD
+EOPT=-e
+OOPT=-n
+!ifdef DLL
+OS_EXT=windll\borland
+!else
+OS_EXT=win\borland
+!endif
+!endif
+
+
+#
+# Build options
+#
+DEFINES=
+!ifdef tracelog
+DEFINES=$(DEFINES) -DTRACELOG
+!endif
+!ifdef evalversion
+DEFINES=$(DEFINES) -DEVAL_VERSION
+!endif
+!ifdef packageversion
+DEFINES=$(DEFINES) -DPACKAGE_VERSION=$(packageversion)
+!endif
+
+
+LIB_DIR = ..\lib\$(OS_EXT)
+OBJ_DIR = ..\obj\$(OS_EXT)
+
+LIB_NAME = $(LIB_DIR)\libmbusmaster.lib
+DLL_NAME = $(LIB_DIR)\libmbusmaster.dll
+
+INC_FILES =\
+hmlib\common\hmplatf.h\
+hmlib\common\hmtcpip.h\
+hmlib\common\hmtimer.hpp\
+BusProtocolErrors.h\
+MbusMasterCexports.h\
+MbusMasterFunctions.hpp\
+MbusSerialMasterProtocol.hpp\
+MbusRtuMasterProtocol.hpp\
+MbusAsciiMasterProtocol.hpp\
+MbusTcpMasterProtocol.hpp\
+MbusRtuOverTcpMasterProtocol.hpp
+
+C_FILES =\
+..\src\hmlib\common\hmcrc16.c\
+..\src\hmlib\common\hmhex.c\
+..\src\BusProtocolErrors.c
+
+CXX_FILES =\
+..\src\hmlib\win32\hmtimer.cpp\
+..\src\hmlib\win32\hmserio.cpp\
+..\src\MbusMasterFunctions.cpp\
+..\src\MbusTcpMasterProtocol.cpp\
+..\src\MbusSerialMasterProtocol.cpp\
+..\src\MbusAsciiMasterProtocol.cpp\
+..\src\MbusRtuMasterProtocol.cpp\
+..\src\MbusRtuOverTcpMasterProtocol.cpp\
+..\src\MbusMasterCexports.cpp
+
+OBJ_FILES =\
+$(OBJ_DIR)\hmcrc16.obj\
+$(OBJ_DIR)\hmhex.obj\
+$(OBJ_DIR)\hmtimer.obj\
+$(OBJ_DIR)\hmserio.obj\
+$(OBJ_DIR)\BusProtocolErrors.obj\
+$(OBJ_DIR)\MbusMasterFunctions.obj\
+$(OBJ_DIR)\MbusTcpMasterProtocol.obj\
+$(OBJ_DIR)\MbusSerialMasterProtocol.obj\
+$(OBJ_DIR)\MbusAsciiMasterProtocol.obj\
+$(OBJ_DIR)\MbusRtuMasterProtocol.obj\
+$(OBJ_DIR)\MbusRtuOverTcpMasterProtocol.obj\
+$(OBJ_DIR)\MbusMasterCexports.obj
+
+!ifdef DLL
+all: $(DLL_NAME)
+!else
+all: $(LIB_NAME)
+!endif
+
+$(DLL_NAME): _includes
+	-md $(LIB_DIR)
+	$(CC) $(CFLAGS) $(EOPT)$(DLL_NAME) $(LDFLAGS) $(DEFINES) -D__DLL__ -D_UNICODE -DUNICODE -I..\src $(C_FILES) $(CXX_FILES)
+!ifndef _NMAKE_VER
+	implib $(LIB_NAME) $(DLL_NAME)
+!else
+	!copy  libmbusmaster.def $(LIB_DIR)
+!endif
+	@echo ""
+	@echo $(DLL_NAME) successfully compiled.
+	@echo ""
+
+$(LIB_NAME): _objects _includes
+	-del $(LIB_NAME)
+	-md $(LIB_DIR)
+!ifdef _NMAKE_VER
+	$(AR) -out:$(LIB_NAME) $(OBJ_FILES)
+!else
+	$(AR) $(LIB_NAME) +-$(OBJ_FILES: = +-)
+!endif
+	@echo ""
+	@echo Library successfully compiled.
+	@echo ""
+
+
+_objects: $(C_FILES) $(CXX_FILES)
+	-md $(OBJ_DIR)
+	$(CC) $(CFLAGS) $(DEFINES) -I..\src $(OOPT)$(OBJ_DIR)\ -c $(C_FILES) $(CXX_FILES)
+
+
+_includes: $(INC_FILES)
+	-md ..\include
+	-attrib -r ..\include\*.*
+!ifdef _NMAKE_VER
+	!copy $** ..\include
+!else
+	&copy $** ..\include
+!endif
+

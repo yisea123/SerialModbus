@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>libmbusmaster</ProjectName>
+    <ProjectGuid>{C34228CD-951F-4FD7-B4D9-17453F3F9A3E}</ProjectGuid>
+    <RootNamespace>FieldTalk</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>NotSet</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>NotSet</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\lib\win\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\obj\win\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\lib\win\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\obj\win\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalOptions>/QIfist %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>..\src\hmlib\common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>FIELDTALK_VERSION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ExceptionHandling>false</ExceptionHandling>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <WarningLevel>Level4</WarningLevel>
+      <OmitDefaultLibName>true</OmitDefaultLibName>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Midl>
+      <TargetEnvironment>X64</TargetEnvironment>
+    </Midl>
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\src\hmlib\common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>FIELDTALK_VERSION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ExceptionHandling>false</ExceptionHandling>
+      <WarningLevel>Level4</WarningLevel>
+      <OmitDefaultLibName>true</OmitDefaultLibName>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\BusProtocolErrors.c" />
+    <ClCompile Include="..\src\hmlib\common\hmcrc16.c" />
+    <ClCompile Include="..\src\hmlib\common\hmhex.c" />
+    <ClCompile Include="..\src\hmlib\win32\hmserio.cpp" />
+    <ClCompile Include="..\src\hmlib\win32\hmtimer.cpp" />
+    <ClCompile Include="..\src\MbusAsciiMasterProtocol.cpp" />
+    <ClCompile Include="..\src\MbusMasterCexports.cpp" />
+    <ClCompile Include="..\src\MbusMasterFunctions.cpp" />
+    <ClCompile Include="..\src\MbusRtuMasterProtocol.cpp" />
+    <ClCompile Include="..\src\MbusRtuOverTcpMasterProtocol.cpp" />
+    <ClCompile Include="..\src\MbusSerialMasterProtocol.cpp" />
+    <ClCompile Include="..\src\MbusTcpMasterProtocol.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\BusProtocolErrors.h" />
+    <ClInclude Include="..\src\FieldTalkVersion.h" />
+    <ClInclude Include="..\src\hmlib\common\hmcrc16.h" />
+    <ClInclude Include="..\src\hmlib\common\hmhex.h" />
+    <ClInclude Include="..\src\hmlib\common\hmplatf.h" />
+    <ClInclude Include="..\src\hmlib\common\hmserio.hpp" />
+    <ClInclude Include="..\src\hmlib\common\hmtcpip.h" />
+    <ClInclude Include="..\src\hmlib\common\hmtimer.hpp" />
+    <ClInclude Include="..\src\hmlib\common\hmtracelog.h" />
+    <ClInclude Include="..\src\hmlib\common\hmtypes.h" />
+    <ClInclude Include="..\src\MbusAsciiMasterProtocol.hpp" />
+    <ClInclude Include="..\src\MbusMasterFunctions.hpp" />
+    <ClInclude Include="..\src\MbusRtuMasterProtocol.hpp" />
+    <ClInclude Include="..\src\MbusRtuOverTcpMasterProtocol.hpp" />
+    <ClInclude Include="..\src\MbusSerialMasterProtocol.hpp" />
+    <ClInclude Include="..\src\MbusTcpMasterProtocol.hpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

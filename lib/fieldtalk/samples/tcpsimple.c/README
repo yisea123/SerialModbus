@@ -1,0 +1,6 @@
+Modbus/TCP master example using C only calls. This example is using the
+C wrapper library to access the FieldTalk C++ class methods from plain C code.
+
+This method is useful if FieldTalk has to be integrated in legacy C code 
+which cannot be recompiled using a C++ compiler.
+
